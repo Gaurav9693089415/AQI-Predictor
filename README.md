@@ -1,195 +1,52 @@
-Air Quality Index (AQI) Forecasting System
-A Python-based system for analyzing and forecasting air quality using time series decomposition and SARIMAX modeling.
+# Air Quality Index (AQI) Forecasting System
 
-Features
-Core Functionality
+A Python-based system for analyzing and forecasting air quality using time series decomposition and SARIMAX modeling. It includes both command-line and web-based (Streamlit) interfaces to generate date-specific forecasts, identify dominant pollutants, and classify AQI based on EPA standards.
 
-AQI forecasting using pollutant data
+---
 
-EPA-standard AQI categorization (Good to Hazardous)
+## Features
 
-Dominant pollutant identification
+### Core Functionality
+- AQI forecasting using historical pollutant data  
+- AQI categorization using EPA standards (Good to Hazardous)  
+- Identification of dominant pollutants  
+- Date-specific forecasts via CLI and Web UI  
 
-Date-specific forecasts (CLI or Web UI)
+### Advanced Analytics
+- Automatic handling of missing values (forward fill and spline interpolation)  
+- STL decomposition (Seasonal-Trend using LOESS)  
+- SARIMAX modeling with exogenous inputs and automated parameter tuning  
+- Forecast evaluation using MAE, RMSE, and R² metrics  
+- Visualization of trends, seasonality, and forecast results  
 
-Advanced Analytics
+---
 
-Automatic handling of missing data using forward fill and spline interpolation
+## Installation
 
-STL decomposition (Seasonal-Trend using LOESS)
+### Requirements
+- Python 3.7 or above  
+- Required Libraries:  
+  `pandas`, `numpy`, `statsmodels`, `scipy`, `matplotlib`, `scikit-learn`, `streamlit`, `joblib`
 
-SARIMAX modeling with exogenous variables and automated parameter selection
-
-Evaluation metrics: MAE, RMSE, R²
-
-Visualization of trends, seasonality, and forecasts
-
-Installation
-Prerequisites
-
-Python 3.7 or higher
-
-Install required packages
-
-bash
-Copy
-Edit
-pip install pandas numpy statsmodels scipy matplotlib scikit-learn streamlit joblib
-Usage
-Data Preparation
-Prepare a CSV file with:
-
-A Timestamp column (parsed as datetime, daily frequency)
-
-Columns for pollutants: PM2.5, PM10, NO, NO2, Nox, NH3, SO2, CO, Ozone
-
-Example:
-
-pgsql
-Copy
-Edit
-Timestamp,PM2.5,PM10,NO,NO2,Nox,NH3,SO2,CO,Ozone
-2020-01-01,32.1,45.6,0.12,0.23,0.35,0.02,0.11,0.56,0.043
-Forecasting Pipeline (Python)
-python
-Copy
-Edit
-from aqi_forecaster import run_analysis
-
-df = pd.read_csv('your_data.csv', parse_dates=['Timestamp'], index_col='Timestamp')
-forecasts = run_analysis(df)
-get_aqi_for_date(forecasts)
-Command-Line Interaction
-On running, the system will prompt for a date:
-
-css
-Copy
-Edit
-Enter a forecast date (YYYY-MM-DD): 2023-06-15
-Example output:
-
-yaml
-Copy
-Edit
-AQI Forecast for 2023-06-15:
-PM2.5: 45.30
-PM10: 62.10
-Ozone: 58.75
-NO2: 34.20
-
-Dominant Pollutant: PM10
-AQI Category: Moderate
-Web Application (Streamlit)
-Setup
-Clone the repository:
-
-bash
-Copy
-Edit
-git clone https://github.com/your-repo/aqi-forecast-app.git
-cd aqi-forecast-app
-Install dependencies:
-
-bash
-Copy
-Edit
-pip install streamlit pandas joblib statsmodels
-Place your trained model (aqi_forecast_model.pkl) in the project directory.
-
-Run the App
-bash
-Copy
-Edit
-streamlit run aqi_app.py
-Application Features
-Calendar-based date selector
-
-Real-time AQI forecasts with pollutant-level breakdown
-
-Color-coded AQI category display
-
-Health impact assessment
-
-Graceful fallback if model prediction fails
-
-Sample Output
-yaml
-Copy
-Edit
-AQI Forecast for 2023-06-15:
-PM2.5: 45.30
-PM10: 62.10
-NO2: 34.20
-SO2: 28.50
-CO: 1.20
-O3: 58.75
-
-Dominant Pollutant: PM10
-AQI Category: Moderate
-Model Details
-STL decomposition with 365-day seasonality
-
-SARIMAX forecasting with grid search for parameter tuning
-
-
-
-
-
-
-You said:
-write it for my readme file of my project
-
-
-ChatGPT said:
-Certainly. Here's a concise, professional, and well-structured version of your README file content, suitable for direct use in your project:
-
-Air Quality Index (AQI) Forecasting System
-A Python-based system for analyzing and forecasting air quality using time series decomposition and SARIMAX models. Includes both command-line and web-based (Streamlit) interfaces for pollutant-level forecasting, AQI categorization, and dominant pollutant identification.
-
-Features
-Forecasts AQI using historical pollutant data
-
-Categorizes AQI according to EPA standards (Good to Hazardous)
-
-Identifies dominant pollutants for each forecasted day
-
-Handles missing data with forward fill and spline interpolation
-
-Performs STL decomposition for trend and seasonality analysis
-
-Implements SARIMAX models with automatic parameter tuning
-
-Provides forecast evaluation using MAE, RMSE, and R² metrics
-
-Visualizes trends, decomposition components, and forecast outputs
-
-Installation
-Requirements
-Python 3.7+
-
-Packages: pandas, numpy, statsmodels, scipy, matplotlib, scikit-learn, streamlit, joblib
-
-Install Dependencies
-bash
-Copy
-Edit
+### Install Dependencies
+```bash
 pip install pandas numpy statsmodels scipy matplotlib scikit-learn streamlit joblib
 Usage
 1. Prepare the Dataset
-The input should be a CSV file with:
+Prepare a CSV file with:
 
 A Timestamp column (daily frequency, convertible to datetime)
 
-Columns for pollutants: PM2.5, PM10, NO, NO2, Nox, NH3, SO2, CO, Ozone
+Pollutant columns: PM2.5, PM10, NO, NO2, Nox, NH3, SO2, CO, Ozone
 
-Example:
+Example CSV Format:
 
-pgsql
+csv
 Copy
 Edit
 Timestamp,PM2.5,PM10,NO,NO2,Nox,NH3,SO2,CO,Ozone
 2020-01-01,32.1,45.6,0.12,0.23,0.35,0.02,0.11,0.56,0.043
-2. Run Forecasting Pipeline
+2. Forecasting Pipeline (Python)
 python
 Copy
 Edit
@@ -200,17 +57,18 @@ forecasts = run_analysis(df)
 
 get_aqi_for_date(forecasts)
 3. Command-Line Interaction
-Enter a date in YYYY-MM-DD format to get forecasts:
+When executed, the system will prompt for a forecast date:
 
 css
 Copy
 Edit
 Enter a forecast date (YYYY-MM-DD): 2023-06-15
-Example output:
+Example Output:
 
 yaml
 Copy
 Edit
+AQI Forecast for 2023-06-15:
 PM2.5: 45.30
 PM10: 62.10
 NO2: 34.20
@@ -227,31 +85,32 @@ Copy
 Edit
 git clone https://github.com/your-repo/aqi-forecast-app.git
 cd aqi-forecast-app
-Install dependencies:
+Install required packages:
 
 bash
 Copy
 Edit
 pip install streamlit pandas joblib statsmodels
-Place the trained model (aqi_forecast_model.pkl) in the project directory.
+Place your trained model file (aqi_forecast_model.pkl) in the project root directory.
 
 Run the Application
 bash
 Copy
 Edit
 streamlit run aqi_app.py
-Features
-Select forecast date using a calendar picker
+Web App Features
+Calendar-based date selector
 
-Display individual pollutant levels and AQI
+Real-time AQI forecasts with pollutant-level breakdown
 
-Identify dominant pollutant
+Color-coded AQI category display
 
-Show health impact category with color-coded results
+Health impact assessment
 
-Fallback mechanism in case of prediction failure
+Graceful fallback if model prediction fails
 
-Example Output
+Sample Output:
+
 yaml
 Copy
 Edit
@@ -266,10 +125,13 @@ O3: 58.75
 Dominant Pollutant: PM10
 AQI Category: Moderate
 Methodology
-STL decomposition with 365-day seasonality
+STL decomposition using a 365-day seasonal cycle
 
-SARIMAX model with automatic grid search based on AIC
+SARIMAX time series forecasting
 
-Cross-pollutant dependencies used as exogenous variables
+Parameter tuning via AIC-based grid search
 
-Evaluation on 30-day holdout set using MAE, RMSE, and R²
+Exogenous inputs from cross-pollutants
+
+Model evaluation using MAE, RMSE, and R² on a 30-day holdout set
+
