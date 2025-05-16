@@ -58,6 +58,4 @@ CSV with columns: `Timestamp, PM2.5, PM10, NO, NO2, Nox, NH3, SO2, CO, Ozone`
 * **Color-coded AQI impact levels**
 * **Fallback handling on prediction failure**
 
-## License
 
-Specify your license (e.g., MIT).
